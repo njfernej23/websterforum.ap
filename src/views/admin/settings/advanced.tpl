@@ -43,10 +43,7 @@
 						[[admin/settings/advanced:headers.csp-frame-ancestors-help]]
 					</p>
 				</div>
-				<div class="mb-3">
-					<label class="form-label" for="powered-by">[[admin/settings/advanced:headers.powered-by]]</label>
-					<input class="form-control" id="powered-by" type="text" placeholder="NodeBB" data-field="powered-by" />
-				</div>
+
 				<div class="mb-3">
 					<label class="form-label" for="access-control-allow-origin">[[admin/settings/advanced:headers.acao]]</label>
 					<input class="form-control" id="access-control-allow-origin" type="text" placeholder="" value="" data-field="access-control-allow-origin" />

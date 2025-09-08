@@ -1,0 +1,785 @@
+/** Ubuntu-Inspired Modern Theme for NodeBB
+* By your Senior Frontend Engineer
+*
+* Instructions: Paste this code into your NodeBB ACP at:
+* Appearance > Custom Content > Custom CSS/Less
+*/
+
+/* Import Ubuntu font */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,0,1;wght@300;400;500;700&display=swap');
+
+/* ========================================= */
+/* 1. THEME VARIABLES & GLOBAL STYLES       */
+/* ========================================= */
+
+:root {
+    --base-bg: #ffffff;
+    /* Pure white */
+    --content-bg: #f8fafc;
+    /* Slate 50 */
+    --border-color: #e2e8f0;
+    /* Slate 200 */
+    --text-primary: #0f172a;
+    /* Slate 900 */
+    --text-secondary: #475569;
+    /* Slate 600 */
+    --accent-color: #e95420;
+    /* Ubuntu Orange */
+    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --card-hover-shadow: 0 0 40px -10px var(--accent-color);
+    /* Glow effect */
+    --border-radius: 0.75rem;
+    /* 12px */
+}
+
+body,
+#panel,
+.container-lg {
+    background-color: var(--base-bg) !important;
+    color: var(--text-primary);
+    font-family: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Remove default header border, use spacing instead */
+.brand-container>.col-12 {
+    border-bottom: 1px solid var(--border-color) !important;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================= */
+/* 2. CATEGORY LIST                          */
+/* ========================================= */
+
+.categories-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Space between category cards */
+}
+
+/* ========================================= */
+/* 3. CATEGORY CARD                          */
+/* ========================================= */
+
+li[component="categories/category"] {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+li[component="categories/category"]:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-color);
+    box-shadow: var(--card-hover-shadow);
+}
+
+/* Category Icon - Use the provided color to create a glow */
+li[component="categories/category"] .icon {
+    border-radius: 0.5rem !important;
+    /* We can't access the inline style color directly, but we can style the container */
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Category Title & Description */
+li[component="categories/category"] h2.title a {
+    color: var(--text-primary) !important;
+    transition: color 0.2s ease;
+}
+
+li[component="categories/category"]:hover h2.title a {
+    color: var(--accent-color) !important;
+    text-decoration: none;
+}
+
+li[component="categories/category"] .description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ========================================= */
+/* 4. STATS & LAST POST                     */
+/* ========================================= */
+
+/* Stats Boxes (Desktop) */
+.meta.stats .card {
+    background-color: var(--base-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: background-color 0.3s ease;
+}
+
+li[component="categories/category"]:hover .meta.stats .card {
+    background-color: #f1f5f9 !important;
+}
+
+.meta.stats .fs-5 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.meta.stats .text-xs {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Last Post / Teaser Section */
+.teaser .lastpost {
+    border-left-width: 3px !important;
+    transition: filter 0.3s ease;
+    /* Brighten the border color on hover */
+    filter: brightness(1.2);
+}
+
+li[component="categories/category"]:hover .teaser .lastpost {
+    filter: brightness(1.5) drop-shadow(0 0 5px);
+}
+
+.teaser .post-content a.stretched-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    border-radius: var(--border-radius);
+}
+
+.teaser .avatar-tooltip img.avatar,
+.teaser .avatar-tooltip span.avatar {
+    border: 2px solid var(--border-color);
+    transition: border-color 0.2s ease;
+}
+
+li[component="categories/category"]:hover .avatar-tooltip img.avatar,
+li[component="categories/category"]:hover .avatar-tooltip span.avatar {
+    border-color: var(--accent-color);
+}
+
+/* FIXED: Improved contrast for category descriptions */
+.teaser a.permalink,
+.teaser .post-content {
+    color: var(--text-secondary) !important;
+    font-size: 0.85rem;
+}
+
+.teaser a.permalink:hover {
+    color: var(--text-primary) !important;
+}
+
+/* Make sure all description text is visible */
+.teaser .post-content p,
+.teaser .post-content div,
+.teaser .post-content span {
+    color: var(--text-secondary) !important;
+}
+
+/* Style for "No new posts" state */
+li[component="categories/category"] .lastpost>.ps-2:has(.post-content:contains("No new posts")) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* ========================================= */
+/* 5. RESPONSIVE & MOBILE STYLES            */
+/* ========================================= */
+
+@media (max-width: 992px) {
+    li[component="categories/category"] {
+        padding: 1rem;
+        border-left: 4px solid;
+        /* Use the border from the teaser on mobile */
+    }
+
+    /* A little trick to grab the border color from the icon's background */
+    li[component="categories/category"].category-1 {
+        border-color: #fda34b;
+    }
+
+    li[component="categories/category"].category-2 {
+        border-color: #59b3d0;
+    }
+
+    li[component="categories/category"].category-3 {
+        border-color: #86ba4b;
+    }
+
+    li[component="categories/category"].category-4 {
+        border-color: #e95c5a;
+    }
+
+    li[component="categories/category"].category-5 {
+        border-color: #77767b;
+    }
+
+    /* Mobile stats badges */
+    .badge.stats,
+    a.badge.timeago {
+        background-color: var(--content-bg) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-secondary) !important;
+    }
+}
+
+/* Hide pagination if it's not needed */
+nav[component="pagination"].hidden {
+    display: none !important;
+}
+
+/* Category Header */
+.category-header {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.category-header .icon {
+    border-radius: 0.5rem !important;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.2));
+}
+
+.category-header h1 {
+    color: var(--text-primary) !important;
+}
+
+.category-header .description {
+    color: var(--text-secondary) !important;
+}
+
+/* Topic List Header Controls */
+.topic-list-header .text-bg-light {
+    background-color: var(--content-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+.btn-ghost {
+    color: var(--text-secondary) !important;
+    border-color: transparent !important;
+}
+
+.btn-ghost:hover {
+    color: var(--accent-color) !important;
+    background-color: var(--content-bg) !important;
+}
+
+.btn-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #d44414 !important;
+    border-color: #d44414 !important;
+}
+
+/* Topic Items */
+li[component="category/topic"] {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+li[component="category/topic"]:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color) !important;
+    box-shadow: var(--card-hover-shadow);
+}
+
+/* Topic Title */
+li[component="category/topic"] h3.title a {
+    color: var(--text-primary) !important;
+    transition: color 0.2s ease;
+}
+
+li[component="category/topic"]:hover h3.title a {
+    color: var(--accent-color) !important;
+    text-decoration: none;
+}
+
+/* Avatar Styling */
+.avatar-tooltip img.avatar,
+.avatar-tooltip span.avatar {
+    border: 2px solid var(--border-color);
+    transition: border-color 0.2s ease;
+}
+
+li[component="category/topic"]:hover .avatar-tooltip img.avatar,
+li[component="category/topic"]:hover .avatar-tooltip span.avatar {
+    border-color: var(--accent-color);
+}
+
+/* Stats Cards in Topic List */
+.meta.stats .card {
+    background-color: var(--base-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+li[component="category/topic"]:hover .meta.stats .card {
+    background-color: #f1f5f9 !important;
+    border-color: var(--accent-color) !important;
+}
+
+/* Teaser/Last Post Section */
+.meta.teaser .lastpost {
+    border-left-width: 3px !important;
+    transition: filter 0.3s ease;
+}
+
+li[component="category/topic"]:hover .meta.teaser .lastpost {
+    filter: brightness(1.2) drop-shadow(0 0 5px rgba(233, 84, 32, 0.3));
+}
+
+/* Badges and Labels */
+.badge.stats,
+.badge.timeago {
+    background-color: var(--content-bg) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-secondary) !important;
+    transition: all 0.2s ease;
+}
+
+li[component="category/topic"]:hover .badge.stats,
+li[component="category/topic"]:hover .badge.timeago {
+    border-color: var(--accent-color) !important;
+    color: var(--accent-color) !important;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+    background-color: var(--content-bg) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: var(--card-shadow);
+}
+
+.dropdown-item {
+    color: var(--text-primary) !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--base-bg) !important;
+    color: var(--accent-color) !important;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+}
+
+.breadcrumb-item a {
+    color: var(--text-secondary) !important;
+}
+
+.breadcrumb-item.active a {
+    color: var(--accent-color) !important;
+}
+
+/* Text Colors */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+/* Form Controls */
+.form-control {
+    background-color: var(--base-bg) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(233, 84, 32, 0.25) !important;
+}/* =====
+==================================== */
+/* 7. CHAT INTERFACE STYLES                 */
+/* ========================================= */
+
+/* Chat Container */
+.chats-full {
+    background-color: var(--base-bg) !important;
+}
+
+/* Chat Navigation Sidebar */
+[component="chat/nav-wrapper"] {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+/* Create Chat Button */
+[component="chat/create"] {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+[component="chat/create"]:hover {
+    background-color: #d44414 !important;
+    border-color: #d44414 !important;
+}
+
+/* Chat Room List */
+.chats-list {
+    background-color: transparent;
+}
+
+[component="chat/recent/room"] {
+    background-color: var(--base-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+[component="chat/recent/room"]:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px -5px var(--accent-color);
+    transform: translateY(-2px);
+}
+
+[component="chat/recent/room"].active {
+    border-color: var(--accent-color) !important;
+    background-color: #fef7f0 !important;
+    box-shadow: 0 0 20px -5px var(--accent-color);
+}
+
+/* Chat Room Button */
+.chat-room-btn {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.chat-room-btn:hover {
+    background-color: transparent !important;
+    color: var(--accent-color) !important;
+}
+
+/* Room Name */
+[component="chat/room/title"] {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+/* Teaser Content */
+.teaser-content {
+    color: var(--text-secondary) !important;
+}
+
+.teaser-username {
+    color: var(--accent-color) !important;
+}
+
+.teaser-timestamp {
+    color: var(--text-secondary) !important;
+}
+
+/* Chat Main Area */
+[component="chat/main-wrapper"] {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+/* Chat Header */
+[component="chat/header"] {
+    background-color: var(--base-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+[component="chat/header/title"] {
+    color: var(--text-primary) !important;
+}
+
+[component="chat/header/title"] a {
+    color: var(--accent-color) !important;
+}
+
+/* Chat Messages Container */
+[component="chat/messages"] {
+    background-color: var(--base-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+/* System Messages */
+.system-message {
+    color: var(--text-secondary) !important;
+    background-color: var(--content-bg);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+}
+
+.system-message hr {
+    border-color: var(--border-color) !important;
+}
+
+/* Chat Messages */
+.chat-message {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin: 0.75rem 0;
+    transition: all 0.3s ease;
+}
+
+.chat-message:hover {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 15px -5px var(--accent-color);
+    transform: translateY(-1px);
+}
+
+/* Message Header */
+.message-header .chat-user a {
+    color: var(--accent-color) !important;
+    font-weight: 600;
+}
+
+.chat-timestamp {
+    color: var(--text-secondary) !important;
+}
+
+/* Message Body */
+.message-body {
+    color: var(--text-primary) !important;
+    background-color: transparent;
+}
+
+/* Message Controls */
+[component="chat/message/controls"] .controls {
+    background-color: var(--base-bg) !important;
+    border-color: var(--border-color) !important;
+    border-radius: var(--border-radius);
+}
+
+[component="chat/message/controls"] .btn {
+    color: var(--text-secondary) !important;
+}
+
+[component="chat/message/controls"] .btn:hover {
+    color: var(--accent-color) !important;
+}
+
+/* Reply/Parent Message */
+[component="chat/message/parent"] {
+    background-color: var(--content-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--border-radius);
+    color: var(--text-secondary) !important;
+}
+
+[component="chat/message/parent"]:hover {
+    border-color: var(--accent-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Chat Composer */
+[component="chat/composer"] {
+    background-color: var(--base-bg);
+    border-top: 1px solid var(--border-color) !important;
+    padding: 1rem;
+}
+
+.chat-input {
+    background-color: var(--content-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    border-radius: var(--border-radius);
+}
+
+.chat-input:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(233, 84, 32, 0.25) !important;
+}
+
+/* Composer Wrapper */
+[component="chat/composer"] .border {
+    border-color: var(--border-color) !important;
+    background-color: var(--content-bg) !important;
+}
+
+/* Composer Buttons */
+[component="chat/composer"] .btn-ghost {
+    color: var(--text-secondary) !important;
+}
+
+[component="chat/composer"] .btn-ghost:hover {
+    color: var(--accent-color) !important;
+    background-color: var(--base-bg) !important;
+}
+
+[component="chat/composer"] .text-primary {
+    color: var(--accent-color) !important;
+}
+
+/* User List Sidebar */
+[component="chat/user/list"] {
+    background-color: var(--content-bg);
+    border-color: var(--border-color) !important;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+[component="chat/user/list"] .btn {
+    color: var(--text-primary) !important;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.25rem;
+}
+
+[component="chat/user/list"] .btn:hover {
+    background-color: var(--base-bg) !important;
+    color: var(--accent-color) !important;
+}
+
+[component="chat/user/list"] .btn.online {
+    border-left: 3px solid #22c55e;
+}
+
+/* Pinned Messages */
+[component="chat/messages/pinned/container"] {
+    background-color: var(--content-bg);
+    border-color: var(--border-color) !important;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+/* Avatar Styling in Chat */
+.chat-message .avatar,
+.teaser-content .avatar,
+[component="chat/user/list"] .avatar {
+    border: 2px solid var(--border-color);
+    transition: border-color 0.2s ease;
+}
+
+.chat-message:hover .avatar,
+.teaser-content:hover .avatar {
+    border-color: var(--accent-color);
+}
+
+/* Mark Read Button */
+.mark-read .fa-circle {
+    color: var(--accent-color) !important;
+}
+
+.mark-read .fa-circle-o {
+    color: var(--text-secondary) !important;
+}
+
+/* Dropdown Menus in Chat */
+.chat-message .dropdown-menu,
+[component="chat/header"] .dropdown-menu {
+    background-color: var(--content-bg) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: var(--card-shadow);
+}
+
+.chat-message .dropdown-item,
+[component="chat/header"] .dropdown-item {
+    color: var(--text-primary) !important;
+}
+
+.chat-message .dropdown-item:hover,
+[component="chat/header"] .dropdown-item:hover {
+    background-color: var(--base-bg) !important;
+    color: var(--accent-color) !important;
+}
+
+/* Images in Chat */
+.chat-message .img-markdown {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    max-width: 300px;
+    transition: all 0.3s ease;
+}
+
+.chat-message .img-markdown:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px -5px var(--accent-color);
+}
+
+/* Emoji in Chat */
+.emoji {
+    filter: brightness(1.1);
+}
+
+/* Typing Indicator */
+[component="chat/composer/typing"] {
+    color: var(--text-secondary) !important;
+}
+
+/* Message Remaining Counter */
+[component="chat/message/remaining"] {
+    color: var(--text-secondary) !important;
+}
+
+/* Search Results */
+[component="chat/message/search/results"] {
+    background-color: var(--base-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+/* Drag and Drop */
+.imagedrop {
+    background-color: rgba(233, 84, 32, 0.1) !important;
+    border: 2px dashed var(--accent-color) !important;
+    color: var(--accent-color) !important;
+    border-radius: var(--border-radius);
+}
+
+/* Responsive Chat */
+@media (max-width: 768px) {
+    [component="chat/nav-wrapper"] {
+        border-radius: var(--border-radius);
+        margin-bottom: 1rem;
+    }
+    
+    [component="chat/main-wrapper"] {
+        border-radius: var(--border-radius);
+    }
+    
+    .chat-message {
+        margin: 0.5rem 0;
+        padding: 0.75rem;
+    }
+}

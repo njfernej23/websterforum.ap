@@ -12,7 +12,6 @@ const plugins = require('../plugins');
 module.exports = function (middleware) {
 	middleware.addHeaders = helpers.try((req, res, next) => {
 		const headers = {
-			'X-Powered-By': encodeURI(meta.config['powered-by'] || 'NodeBB'),
 			'Access-Control-Allow-Methods': encodeURI(meta.config['access-control-allow-methods'] || ''),
 			'Access-Control-Allow-Headers': encodeURI(meta.config['access-control-allow-headers'] || ''),
 		};
