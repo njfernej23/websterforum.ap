@@ -1,14 +1,14 @@
 {
-  "url": "http://localhost:4567",
-  "secret": "changeme-secret",
-  "database": "mongo",
-  "mongo": {
-    "host": "127.0.0.1",
-    "port": "27017",
-    "username": "testuser",
-    "password": "testpass",
-    "database": "nodebb",
-    "uri": ""
-  },
-  "port": "4567"
+    "url": "http://localhost:4567",
+    "secret": "28d67a7e-4c49-4fdc-809d-625ee3fec8ca",
+    "database": "mongo",
+    "mongo": {
+        "host": "127.0.0.1",
+        "port": "27017",
+        "username": "nodebb",
+        "password": "niggabek2025",
+        "database": "nodebb",
+        "uri": ""
+    },
+    "port": "4567"
 }
